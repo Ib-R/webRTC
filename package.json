@@ -1,0 +1,18 @@
+{
+  "name": "webrtc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "rtc.js",
+  "dependencies": {
+    "peer": "^0.5.3"
+  },
+  "devDependencies": {
+    "peer": "^0.5.3"
+  },
+  "scripts": {
+    "start": "node peerServer.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
