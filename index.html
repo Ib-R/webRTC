@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>webRTC</title>
+
+		<style>
+			.hide {
+				display: none;
+			}
+		</style>
+	</head>
+	<body>
+		<p style="color: blue;" id="alert"></p>
+
+		<div style="width: 20em;">
+			<h2>Peers List</h2>
+			<ul id="peersList"></ul>
+		</div>
+
+		<div>
+			<label for="id">Your ID:</label>
+			<input id="id" style="width: 20em; margin-bottom: 1em;" />
+			<input type="button" value="Copy" onclick="copyToClipboard('id')" />
+		</div>
+
+		<div style="margin-bottom: 1em;">
+			<label for="id">Dest. Peer ID:</label>
+			<input id="otherId" style="width: 20em;" />
+			
+			<button id="connect">Connect</button>
+
+			<label for="audioCheck">Audio</label>
+			<input type="checkbox" id="audioCheck">
+			<label for="audioCheck">Video</label>
+			<input type="checkbox" id="videoCheck">
+
+			<button id="call">Call</button>
+		</div>
+
+		<div id="videoDiv" class="hide">
+			<video id="videoChat" width="300" height="300"></video>
+			<button id="closeStream">End Call</button>
+		</div>
+
+		<div id="msgs"></div>
+
+		<div>
+			<input id="msg" placeholder="Send Message" />
+			<button id="send">Send</button>
+		</div>
+
+		<script src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script>
+		<script src="util.js"></script>
+		<script src="rtc.js"></script>
+	</body>
+</html>
