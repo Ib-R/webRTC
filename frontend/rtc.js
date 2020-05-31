@@ -1,6 +1,6 @@
 let peer = new Peer("", {
 	host: "radiant-peak-92517.herokuapp.com",
-	port: 80,
+	port: 443,
 	secure: true,
 	debug: 3,
 });
