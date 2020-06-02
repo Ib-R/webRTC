@@ -6,13 +6,50 @@
 		<title>webRTC</title>
 
 		<style>
+			body {
+				background-color: #393947;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+			}
 			.hide {
 				display: none;
+			}
+			#alert {
+				padding: 8px;
+				background: blue;
+				border-radius: 6px;
+				color: ghostwhite;
+			}
+			#videoChat {
+				width: 100%;
+			}
+			#localStream {
+				width: 75%;
+			}
+			#call {
+				width: 100%;
+				display: block;
+				margin: 5px;
+				padding: 5px;
+			}
+			#inputDiv {
+				position: fixed;
+				bottom: 3px;
+			}
+			@media (min-width: 768px) {
+				#videoChat {
+					width: 74%;
+				}
+				#localStream {
+					width: 25%;
+				}
 			}
 		</style>
 	</head>
 	<body>
-		<p style="color: blue;" id="alert"></p>
+		<p id="alert" class="hide"></p>
 
 		<div style="width: 20em;">
 			<h2>Peers List</h2>
@@ -21,32 +58,35 @@
 
 		<div>
 			<label for="id">Your ID:</label>
-			<input id="id" style="width: 20em; margin-bottom: 1em;" />
+			<input id="id" style="width: 19em; margin-bottom: 1em;" />
 			<input type="button" value="Copy" onclick="copyToClipboard('id')" />
 		</div>
 
 		<div style="margin-bottom: 1em;">
-			<label for="id">Dest. Peer ID:</label>
-			<input id="otherId" style="width: 20em;" />
-			
-			<button id="connect">Connect</button>
+			<label for="id">Dest. ID:</label>
+			<input id="otherId" style="width: 19em;" />
 
-			<label for="audioCheck">Audio</label>
-			<input type="checkbox" id="audioCheck">
-			<label for="audioCheck">Video</label>
-			<input type="checkbox" id="videoCheck">
+			<button id="connect">Connect</button>
+		</div>
+
+		<div style="margin-bottom: 1em;">
+			<input type="checkbox" id="audioCheck" checked />
+			<label for="audioCheck">Enable Audio</label>
+			<input type="checkbox" id="videoCheck" />
+			<label for="audioCheck">Enable Video</label>
 
 			<button id="call">Call</button>
 		</div>
 
 		<div id="videoDiv" class="hide">
-			<video id="videoChat" width="300" height="300"></video>
-			<button id="closeStream">End Call</button>
+			<video id="videoChat"></video>
+			<video id="localStream"></video>
+			<button id="closeStream" style="padding: 10px;">End Call</button>
 		</div>
 
 		<div id="msgs"></div>
 
-		<div>
+		<div id="inputDiv">
 			<input id="msg" placeholder="Send Message" />
 			<button id="send">Send</button>
 		</div>

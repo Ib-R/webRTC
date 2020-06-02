@@ -1,5 +1,5 @@
 let peers = [];
-let audioCheck = false;
+let audioCheck = true;
 let videoCheck = false;
 
 // document.getElementById('audioCheck').onchange = () => audioCheck = !audioCheck;
@@ -11,11 +11,20 @@ function showMsg(msg, type) {
 	document.getElementById("msgs").appendChild(newMsg);
 }
 
-function showVideoStream(stream) {
-	let video = document.getElementById("videoChat");
+function showAlert(msg) {
+	let alertDiv = document.getElementById("alert");
+	alertDiv.innerHTML = msg;
+	alertDiv.classList.remove("hide");
+}
+
+function showVideoStream(remoteStream, localStream) {
+	let remoteVideo = document.getElementById("videoChat");
+	let localVideo = document.getElementById("localStream");
 	document.getElementById("videoDiv").classList.remove("hide");
-	video.srcObject = stream;
-	video.play();
+	remoteVideo.srcObject = remoteStream;
+	remoteVideo.play();
+	localVideo.srcObject = localStream;
+	localVideo.play();
 }
 
 function updatePeers(newPeer = null) {
