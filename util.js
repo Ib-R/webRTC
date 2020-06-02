@@ -23,6 +23,8 @@ function showVideoStream(remoteStream, localStream) {
 	document.getElementById("videoDiv").classList.remove("hide");
 	remoteVideo.srcObject = remoteStream;
 	remoteVideo.play();
+	
+	localVideo.getAudioTracks()[0].enabled = audioCheck;
 	localVideo.srcObject = localStream;
 	localVideo.play();
 }
