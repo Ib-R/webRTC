@@ -97,40 +97,6 @@ peer.on("close", function () {
 	alert(`Peer connection closed`);
 });
 
-function onConnectionOpen(conn, peerToAdd, connDirection) {
-	updatePeers(peerToAdd);
-
-	conn.on("data", (data) => {
-		showMsg(data, connDirection);
-	});
-
-	document.getElementById("send").onclick = () => {
-		let msgToSend = document.getElementById("msg").value;
-		console.log(`msgToSend: ${msgToSend}`);
-
-		conn.send(msgToSend);
-	};
-}
-
-function onStream(remoteStream, stream, peerToAdd) {
-	updatePeers(peerToAdd);
-	showVideoStream(remoteStream, stream);
-	document.getElementById("audioCheck").onchange = () => {
-		audioCheck = !audioCheck;
-		stream.getAudioTracks()[0].enabled = audioCheck;
-	};
-	document.getElementById("videoCheck").onchange = () => {
-		videoCheck = !videoCheck;
-		stream.getVideoTracks()[0].enabled = videoCheck;
-	};
-}
-
-function onCallClose(stream) {
-	showAlert("Call disconnected");
-	stream.getTracks().forEach((track) => track.stop());
-	document.getElementById("videoDiv").classList.add("hide");
-}
-
 setInterval(() => {
 	console.log("Peer connections: ", peer.connections);
 }, 5000);

@@ -2,9 +2,6 @@ let peers = [];
 let audioCheck = true;
 let videoCheck = false;
 
-// document.getElementById('audioCheck').onchange = () => audioCheck = !audioCheck;
-// document.getElementById('videoCheck').onchange = () => videoCheck = !videoCheck;
-
 function showMsg(msg, type) {
 	let newMsg = document.createElement("p");
 	newMsg.innerText = `${type} connection: ${msg}`;
@@ -21,6 +18,7 @@ function showVideoStream(remoteStream, localStream) {
 	let remoteVideo = document.getElementById("videoChat");
 	let localVideo = document.getElementById("localStream");
 	document.getElementById("videoDiv").classList.remove("hide");
+	
 	remoteVideo.srcObject = remoteStream;
 	remoteVideo.play();
 
@@ -40,6 +38,40 @@ function updatePeers(newPeer = null) {
 		peerItem.innerText = peer;
 		peersList.appendChild(peerItem);
 	});
+}
+
+function onConnectionOpen(conn, peerToAdd, connDirection) {
+	updatePeers(peerToAdd);
+
+	conn.on("data", (data) => {
+		showMsg(data, connDirection);
+	});
+
+	document.getElementById("send").onclick = () => {
+		let msgToSend = document.getElementById("msg").value;
+		console.log(`msgToSend: ${msgToSend}`);
+
+		conn.send(msgToSend);
+	};
+}
+
+function onStream(remoteStream, stream, peerToAdd) {
+	updatePeers(peerToAdd);
+	showVideoStream(remoteStream, stream);
+	document.getElementById("audioCheck").onchange = () => {
+		audioCheck = !audioCheck;
+		stream.getAudioTracks()[0].enabled = audioCheck;
+	};
+	document.getElementById("videoCheck").onchange = () => {
+		videoCheck = !videoCheck;
+		stream.getVideoTracks()[0].enabled = videoCheck;
+	};
+}
+
+function onCallClose(stream) {
+	showAlert("Call disconnected");
+	stream.getTracks().forEach((track) => track.stop());
+	document.getElementById("videoDiv").classList.add("hide");
 }
 
 function copyToClipboard(id) {
