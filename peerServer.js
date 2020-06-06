@@ -1,29 +1,13 @@
-const fs = require("fs"),
-	privateKey = fs.readFileSync("sslcert/key.pem", "utf8"), // SSL cert
-	certificate = fs.readFileSync("sslcert/cert.pem", "utf8"),
-	credentials = { key: privateKey, cert: certificate }, // add to createServer and change http to https
-	https = require("https"),
-	http = require("http"),
-	express = require("express"),
-	app = express(),
-	httpsServer = http.createServer(app),
-	port = process.env.PORT || 433,
-	{ ExpressPeerServer } = require("peer"),
-	cors = require("cors");
+const fs = require("fs");
+const { PeerServer } = require("peer");
 
-const corsOptions = {
-	origin: "https://ib-r.github.io",
-	optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-};
-
-const peerServer = ExpressPeerServer(httpsServer, {
+const peerServer = PeerServer({
+	port: process.env.PORT || 433,
 	path: "/",
-	debug: true,
+	// ssl: {
+	// 	key: fs.readFileSync("sslcert/key.pem"),
+	// 	cert: fs.readFileSync("sslcert/cert.pem"),
+	// },
 });
 
-app.use(cors(corsOptions))
-app.use("/", peerServer);
-
-httpsServer.listen(port);
-
-console.log(`Server is running on port ${port} with SSL`);
+console.log("PeerServer is running on port 443");
