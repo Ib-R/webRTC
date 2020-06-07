@@ -1,4 +1,4 @@
-const socket = io("https://localhost:9000");
+const socket = io("https://radiant-peak-92517.herokuapp.com");
 let socketId = "";
 
 socket.on("connected", (data) => {
