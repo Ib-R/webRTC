@@ -1,6 +1,14 @@
 let peers = [];
 let audioCheck = true;
 let videoCheck = false;
+let onCall = false;
+
+document.getElementById("audioCheck").onchange = () => {
+	audioCheck = !audioCheck;
+};
+document.getElementById("videoCheck").onchange = () => {
+	videoCheck = !videoCheck;
+};
 
 function showMsg(msg, type) {
 	let newMsg = document.createElement("p");
@@ -18,7 +26,7 @@ function showVideoStream(remoteStream, localStream) {
 	let remoteVideo = document.getElementById("videoChat");
 	let localVideo = document.getElementById("localStream");
 	document.getElementById("videoDiv").classList.remove("hide");
-	
+
 	remoteVideo.srcObject = remoteStream;
 	remoteVideo.play();
 
@@ -56,6 +64,7 @@ function onConnectionOpen(conn, peerToAdd, connDirection) {
 }
 
 function onStream(remoteStream, stream, peerToAdd) {
+	onCall = true;
 	updatePeers(peerToAdd);
 	showVideoStream(remoteStream, stream);
 	document.getElementById("audioCheck").onchange = () => {
@@ -69,9 +78,10 @@ function onStream(remoteStream, stream, peerToAdd) {
 }
 
 function onCallClose(stream) {
-	showAlert("Call disconnected");
+	onCall = false;
 	stream.getTracks().forEach((track) => track.stop());
 	document.getElementById("videoDiv").classList.add("hide");
+	showAlert("Call disconnected");
 }
 
 function copyToClipboard(id) {
