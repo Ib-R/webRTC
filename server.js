@@ -33,6 +33,6 @@ app.get("/s", (req, res, next) => {
 	res.json({ hello: 123 });
 });
 
-httpsServer.listen(port);
+server.listen(port);
 
 console.log(`Server is running on port ${port} with SSL`);
