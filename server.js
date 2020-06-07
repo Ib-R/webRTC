@@ -6,18 +6,21 @@ const fs = require("fs"),
 	http = require("http"),
 	express = require("express"),
 	app = express(),
-	httpsServer = http.createServer(app),
+	httpsServer = https.createServer(credentials, app),
+	httpServer = http.createServer(app),
 	port = process.env.PORT || 9000,
 	{ ExpressPeerServer } = require("peer"),
 	cors = require("cors");
+
+global.server = httpServer;
+const sockets = require('./sockets');
 
 const corsOptions = {
 	origin: "https://ib-r.github.io",
 	optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 
-
-const peerServer = ExpressPeerServer(httpsServer, {
+const peerServer = ExpressPeerServer(server, {
 	debug: true,
 	path: "/",
 	cors: false,
@@ -26,9 +29,9 @@ const peerServer = ExpressPeerServer(httpsServer, {
 app.use(cors(corsOptions));
 app.use("/", peerServer);
 
-app.get('/s', (req, res, next) => {
-	res.json({hello: 123});
-})
+app.get("/s", (req, res, next) => {
+	res.json({ hello: 123 });
+});
 
 httpsServer.listen(port);
 

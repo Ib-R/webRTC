@@ -4,7 +4,8 @@
   "description": "",
   "main": "rtc.js",
   "dependencies": {
-    "peer": "^0.5.3"
+    "peer": "^0.5.3",
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "gh-pages": "^3.0.0",
@@ -12,8 +13,8 @@
     "peer": "^0.5.3"
   },
   "scripts": {
-    "start": "node peerServer.js",
-    "dev": "nodemon peerServer.js",
+    "start": "node server.js",
+    "dev": "nodemon server.js",
     "deploy": "gh-pages -d frontend"
   },
   "keywords": [],
